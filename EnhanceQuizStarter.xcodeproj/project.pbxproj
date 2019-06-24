@@ -14,6 +14,7 @@
 		972A72BB2056F06C0059EF4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 972A72B92056F06C0059EF4A /* LaunchScreen.storyboard */; };
 		972A72C32056F0E40059EF4A /* GameSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 972A72C22056F0E40059EF4A /* GameSound.wav */; };
 		B8F7E5DD22C036A2005CC5FC /* QuestionsClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F7E5DC22C036A2005CC5FC /* QuestionsClass.swift */; };
+		B8F7E5DF22C03C2C005CC5FC /* QuestionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F7E5DE22C03C2C005CC5FC /* QuestionProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		972A72BC2056F06C0059EF4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		972A72C22056F0E40059EF4A /* GameSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GameSound.wav; sourceTree = "<group>"; };
 		B8F7E5DC22C036A2005CC5FC /* QuestionsClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsClass.swift; sourceTree = "<group>"; };
+		B8F7E5DE22C03C2C005CC5FC /* QuestionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				972A72BC2056F06C0059EF4A /* Info.plist */,
 				972A72C22056F0E40059EF4A /* GameSound.wav */,
 				B8F7E5DC22C036A2005CC5FC /* QuestionsClass.swift */,
+				B8F7E5DE22C03C2C005CC5FC /* QuestionProvider.swift */,
 			);
 			path = EnhanceQuizStarter;
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8F7E5DF22C03C2C005CC5FC /* QuestionProvider.swift in Sources */,
 				972A72B32056F06C0059EF4A /* ViewController.swift in Sources */,
 				B8F7E5DD22C036A2005CC5FC /* QuestionsClass.swift in Sources */,
 				972A72B12056F06C0059EF4A /* AppDelegate.swift in Sources */,

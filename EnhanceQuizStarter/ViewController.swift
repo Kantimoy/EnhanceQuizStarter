@@ -14,32 +14,38 @@ class ViewController: UIViewController {
     
     // MARK: - Properties
     
-    let questionsPerRound = 4
+    var questionsPerRound = 0
     var questionsAsked = 0
     var correctQuestions = 0
-    var indexOfSelectedQuestion = 0
     
     var gameSound: SystemSoundID = 0
     
-    let trivia: [[String : String]] = [
-        ["Question": "Only female koalas can whistle", "Answer": "False"],
-        ["Question": "Blue whales are technically whales", "Answer": "True"],
-        ["Question": "Camels are cannibalistic", "Answer": "False"],
-        ["Question": "All ducks are birds", "Answer": "True"]
-    ]
+    var question = GetQuestion()
     
     // MARK: - Outlets
-    
     @IBOutlet weak var questionField: UILabel!
-    @IBOutlet weak var trueButton: UIButton!
-    @IBOutlet weak var falseButton: UIButton!
+    @IBOutlet weak var feedBack: UILabel!
+    @IBOutlet weak var optionOne: UIButton!
+    @IBOutlet weak var optionTwo: UIButton!
+    @IBOutlet weak var optionThree: UIButton!
+    @IBOutlet weak var optionFour: UIButton!
+    
     @IBOutlet weak var playAgainButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loadGameStartSound()
+        // Start game
         playGameStartSound()
+        
+        //Shuffle the question array for randomness and then show so that no questions are repeated and with every new play random questions are shown.
+        question.shuffleQuestion()
+        
+        //Total Questions count.
+        questionsPerRound = question.questionToDisplay.count
+        
+        //Display the question after shuffling.
         displayQuestion()
     }
     
@@ -56,21 +62,74 @@ class ViewController: UIViewController {
     }
     
     func displayQuestion() {
-        indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound: trivia.count)
-        let questionDictionary = trivia[indexOfSelectedQuestion]
-        questionField.text = questionDictionary["Question"]
+        //Assigning questions to question field Label.
+        questionField.text = question.showQuestion()
+        
+        //Hidden buttons.
+        feedBack.isHidden = true
         playAgainButton.isHidden = true
+        
+        //Number of options available in a question.
+        var countOfoptions = question.showOption().count
+        
+        //Show 3 or 4 options based on availability.
+        // IF 3 options are available then 4th options is hidden.
+        // Then assign answers to button until count is 0.
+        if countOfoptions == 3 {
+            optionFour.isHidden = true
+            
+            //Then Loops through array of 'options' and assigns to each button.
+            for option in question.showOption() {
+                if countOfoptions == 3 {
+                    optionOne.setTitle(option, for: .normal)
+                } else if countOfoptions == 2 {
+                    optionTwo.setTitle(option, for: .normal)
+                } else { optionThree.setTitle(option, for: .normal) }
+                
+                countOfoptions -= 1
+            }
+        }
+            //If 4 options are there then options are set in their respective button.
+        else {
+            optionFour.isHidden = false //4th option is available.
+            for option in question.showOption() {
+                if countOfoptions == 4 {
+                    optionOne.setTitle(option, for: .normal)
+                } else if countOfoptions == 3 {
+                    optionTwo.setTitle(option, for: .normal)
+                } else if countOfoptions == 2 {
+                    optionThree.setTitle(option, for: .normal)
+                } else {
+                    optionFour.setTitle(option, for: .normal)
+                }
+                
+                countOfoptions -= 1
+            }
+        }
+        
+        //Rounding of buttons.
+        optionOne.layer.cornerRadius = 5
+        optionTwo.layer.cornerRadius = 5
+        optionThree.layer.cornerRadius = 5
+        optionFour.layer.cornerRadius = 5
     }
     
     func displayScore() {
-        // Hide the answer uttons
-        trueButton.isHidden = true
-        falseButton.isHidden = true
+        // Hide the answer buttons
+        optionOne.isHidden = true
+        optionTwo.isHidden = true
+        optionThree.isHidden = true
+        optionFour.isHidden = true
+        feedBack.isHidden = true
         
-        // Display play again button
+        // Display "play again" & "feedback button"
         playAgainButton.isHidden = false
         
-        questionField.text = "Way to go!\nYou got \(correctQuestions) out of \(questionsPerRound) correct!"
+        //questionIndex is 0 as counting of questions will start again.
+        question.questionIndex = 0
+        
+        //Display Final Score
+        questionField.text = "Way to go!\nYou got \(correctQuestions) correct out of \(questionsPerRound) questions. !"
     }
     
     func nextRound() {
@@ -101,27 +160,34 @@ class ViewController: UIViewController {
         // Increment the questions asked counter
         questionsAsked += 1
         
-        let selectedQuestionDict = trivia[indexOfSelectedQuestion]
-        let correctAnswer = selectedQuestionDict["Answer"]
-        
-        if (sender === trueButton &&  correctAnswer == "True") || (sender === falseButton && correctAnswer == "False") {
+        feedBack.isHidden = false
+        if (sender.title(for: .selected)! == question.showCorrectAnswer()) {
             correctQuestions += 1
-            questionField.text = "Correct!"
+            feedBack.text = "Correct!"
         } else {
-            questionField.text = "Sorry, wrong answer!"
+            feedBack.text = "Sorry, wrong answer!"
         }
         
+        //Increase the index to go to next question.
+        question.questionIndex += 1
         loadNextRound(delay: 2)
     }
     
     
     @IBAction func playAgain(_ sender: UIButton) {
+        
         // Show the answer buttons
-        trueButton.isHidden = false
-        falseButton.isHidden = false
+        questionField.isHidden = false
+        optionOne.isHidden = false
+        optionTwo.isHidden = false
+        optionThree.isHidden = false
+        optionFour.isHidden = false
         
         questionsAsked = 0
         correctQuestions = 0
+        
+        //Questions are shuffled so that questions are displaed randomly.
+        question.shuffleQuestion()
         nextRound()
     }
     
