@@ -12,7 +12,7 @@ import Foundation
 class GetQuestion {
     
     //Array of all the questions from question class.
-    var allQuestion = [question1,question2,question3,question4,question5,question6]
+    var allQuestion = [question1,question2,question3,question4,question5,question6,question7,question8,question9,question10]
     
     //Questions in this array will be shown in the app.
     var questionToDisplay = [Question]()
@@ -42,3 +42,4 @@ class GetQuestion {
     
     
 }
+

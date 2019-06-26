@@ -182,6 +182,7 @@ class ViewController: UIViewController {
         optionTwo.isHidden = false
         optionThree.isHidden = false
         optionFour.isHidden = false
+        playAgainButton.layer.cornerRadius = 8
         
         questionsAsked = 0
         correctQuestions = 0
